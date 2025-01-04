@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ResepListResource;
 use App\Models\Bahan;
 use App\Models\Resep;
 use App\Validators\ResepValidator;
@@ -16,11 +17,10 @@ class CommonController extends Controller
         $keyword = $request->input('keyword', '');
 
         $resep_list = Resep::where('nama_resep', 'LIKE', '%' . $keyword . '%')
-                            ->with('bahans')
-                            ->paginate($perPage);
+            ->paginate($perPage);
 
         return response()->json([
-            'data' => $resep_list->items(),
+            'data' => ResepListResource::collection($resep_list->items()),
             'current_page' => $resep_list->currentPage(),
             'last_page' => $resep_list->lastPage(),
             'total' => $resep_list->total()
