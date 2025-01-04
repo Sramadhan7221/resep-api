@@ -17,8 +17,8 @@ class CommonController extends Controller
         $keyword = $request->input('keyword', '');
 
         $resep_list = Resep::where('nama_resep', 'LIKE', '%' . $keyword . '%')
-            ->paginate($perPage)
-            ->with('bahans');
+            ->with('bahans')
+            ->paginate($perPage);
 
         return response()->json([
             'data' => ResepListResource::collection($resep_list->items()),
