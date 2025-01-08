@@ -44,9 +44,7 @@ class CommonController extends Controller
             ];
         }
         
-        return response()->json([
-            'data' => $resep
-        ]);
+        return response()->json($resep);
     }
 
     public function addResep(Request $request)
