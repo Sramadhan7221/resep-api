@@ -28,6 +28,14 @@ class CommonController extends Controller
         ]);
     }
 
+    public function getResep($id)
+    {
+        $resep = Resep::where('id', $id)->with('bahans')->first();
+        return response()->json([
+            'data' => $resep
+        ]);
+    }
+
     public function addResep(Request $request)
     {
         try {
