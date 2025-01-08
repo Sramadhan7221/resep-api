@@ -31,6 +31,19 @@ class CommonController extends Controller
     public function getResep($id)
     {
         $resep = Resep::where('id', $id)->with('bahans')->first();
+        if($resep)
+        {
+            $resep = [
+                'id' => $resep->id,
+                'nama_resep' => $resep->nama_resep,
+                'desc_resep' => $resep->desc_resep,
+                'langkah' => explode("|", $resep->langkah),
+                'bahans' => $resep->bahans->map(function($data) {
+                    return $data->desc_bahan;
+                })
+            ];
+        }
+        
         return response()->json([
             'data' => $resep
         ]);
